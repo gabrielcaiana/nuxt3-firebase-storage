@@ -1,4 +1,11 @@
 import { initializeApp } from "firebase/app";
+import {
+  getStorage,
+  ref,
+  uploadString,
+  getDownloadURL,
+  getMetadata,
+} from "firebase/storage";
 
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
@@ -13,5 +20,16 @@ export default defineNuxtPlugin(() => {
     measurementId: config.public.firebaseMeasurementId,
   };
 
-  initializeApp(firebaseConfig);
+  const app = initializeApp(firebaseConfig);
+  const storage = getStorage(app);
+
+  return {
+    provide: {
+      storage,
+      ref,
+      uploadString,
+      getDownloadURL,
+      getMetadata,
+    },
+  };
 });
